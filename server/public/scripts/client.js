@@ -19,8 +19,10 @@ function readyNow() {
 // submit sends the data from the inputs to server
 function submit() { 
     console.log('submit was clicked'); 
-    let first = $('#first-number').val()
-    let second = $('#second-number').val()
+    let first = $('#first-number').val();
+    console.log(first); 
+    let second = $('#second-number').val(); 
+    console.log(second); 
     // this post sends the data1
     $.ajax({
         method: 'POST', 
@@ -31,11 +33,32 @@ function submit() {
             operator: selectedOperator
         }
     }).then( function(response) {
-        console.log('received from server POST:', response)
+        console.log('received from server POST:')
+        
+        getResults()
         // clear inputs 
         clearInputs(); 
     })
 } 
+
+
+function getResults() { 
+    // Making a GET request to our server
+    // this returns back a 'Promise' 
+    $.ajax({
+        method: 'GET', 
+        url: '/numbers'
+    }).then(function(response){
+        console.log('Got response', response); 
+        renderPage(response); 
+    })
+    
+    console.log(`end of get Results`);
+} 
+
+function renderPage(input) { 
+    console.log(input)
+}
 
 function setOperator(num) { 
     if (num === 'add') { 
@@ -46,12 +69,6 @@ function setOperator(num) {
         $('#add-button').addClass('red') 
         // un-highlight all other buttons
         removeAllElse(selectedOperator); 
-    } 
-    else if(num === 'add') {
-        console.log('+ selected') 
-        $('#add-button').addClass('red') 
-        selectedOperator = 'add'
-        removeAllElse(selectedOperator);
     } 
     else if(num === 'subtract') {
         console.log('- selected') 
