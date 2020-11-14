@@ -5,25 +5,53 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Jquery Server Side Calculator</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="styles/styles.css"> 
+        <link rel ="stylesheet" href="styles/bootstrap.min.css">
+        <link rel="stylesheet" href="styles/styles.css">  
         <script src="vendors/jquery.min.js"></script>
         <script src="scripts/client.js"></script>
     </head>
     <body> 
-        <header> 
+        <nav class="navbar navbar-dark bg-dark"> 
             <h1>JQuery Server Side Calculator</h1>
-        </header> 
-        <section> 
-            <input id="first-number" class="input" type="number"> 
-            <button id="add-button" class="operator-button">+</button>
-            <button id="subtract-button" class="operator-button">-</button>
-            <button id="multiply-button" class="operator-button">*</button>
-            <button id="divide-button" class="operator-button">/</button>
-            <input id="second-number" class="input" type="number">
-            <button id="submit-button" class="operator-button">=</button> 
-            <button id="clear-button" class="operator-button">c</button> 
-        </section> 
-        <div></div>
-        <div></div>
-    </body>
-</html>
+        </nav> 
+        <div id="calc-div"> 
+            <div id="display-total-div">
+                <p id="first-number-display">******</p>
+                <input id="calc-display" type="number"  height="100px">
+            </div>
+            <div>
+                <div id="clearAll-div" class="btn-div operator-button operator-button-color">c/a</div>
+                <div id="clear-div" class="btn-div operator-button operator-button-color">c</div>
+                <div id="percentage-div" class="btn-div operator-button operator-button-color">%</div>
+                <div id="divide-div" class="btn-div operator-button operator-button-color">÷</div>
+            <div>
+                <div id="btn-1-div" class="btn-div btn-div-ex0">1</div>
+                <div id="btn-2-div" class="btn-div btn-div-ex0">2</div>
+                <div id="btn-3-div" class="btn-div btn-div-ex0">3</div>
+                <div id="multiply-div" class="btn-div operator-button operator-button-color">x</div>
+            </div>
+            <div>
+                <div id="btn-4-div" class="btn-div btn-div-ex0">4</div>
+                <div id="btn-5-div" class="btn-div btn-div-ex0">5</div>
+                <div id="btn-6-div" class="btn-div btn-div-ex0">6</div>
+                <div id="subtract-div" class="btn-div operator-button operator-button-color">-</div>
+            </div> 
+            <div>
+                <div id="btn-4-div" class="btn-div btn-div-ex0">4</div>
+                <div id="btn-5-div" class="btn-div btn-div-ex0">5</div>
+                <div id="btn-6-div" class="btn-div btn-div-ex0">6</div>
+                <div id="add-div" class="btn-div operator-button operator-button-color">+</div>
+            </div>
+            <div>
+                <div id="btn-0-div" class="btn-div">0</div>
+                <div id="enter-div" class="btn-div operator-button operator-button-color" class="">=</div>
+            </div>
+            
+           
+        </div> 
+        <div id="calcDiv"></div>
+        <div id=></div>
+    </body> 
+</html> 
+
+

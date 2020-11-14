@@ -1,3 +1,51 @@
 .red { 
-    background-color: red;
+    background-color: orange; 
+} 
+
+h1 { 
+    color: orange; 
 }
+#display-total-div {
+    border: black solid 1px;
+    width: 413px;
+} 
+#first-number-display { 
+    font-size: 1.75rem;
+    color: gray; 
+}
+#calc-display { 
+    width: 409.5px;
+    height: 110px; 
+    font-size: 3rem;
+    border-style: hidden;
+}
+#calc-div { 
+    margin-top: 5%; 
+    margin-left: 10%; 
+} 
+.btn-div { 
+    margin: 0;
+    display: inline-block; 
+    border: black solid 2px; 
+}  
+.btn-div-ex0 { 
+    background-color: gainsboro; 
+    width: 100px; 
+    height: 100px 
+}  
+#btn-0-div { 
+    background-color: gainsboro;
+    width: 308px; 
+    height: 100px 
+} 
+.operator-button { 
+    width: 100px; 
+    height: 100px; 
+}  
+.operator-button-color { 
+    background-color: darkgray; 
+}  
+#enter-div { 
+    margin-left: 1px
+}
+

@@ -1,27 +1,32 @@
 console.log('hello from client'); 
 // global variables
 let selectedOperator = ''; 
-
+let first = ''; 
+let second =''; 
+let sequence = false; 
 $(document).ready(readyNow); 
 
 function readyNow() { 
     console.log('hello from JQuery');
     // button click events 
     $('#clear-button').on('click', clearInputs);
-    $('#submit-button').on('click', submit);
+    $('#enter-div').on('click', submit);
     // operator click events 
-    $('#add-button').on('click', () => setOperator('add'));
-    $('#subtract-button').on('click', () => setOperator('subtract'))
-    $('#multiply-button').on('click', () => setOperator('multiply'))
-    $('#divide-button').on('click', () => setOperator('divide'))
+    $('#add-div').on('click', () => setOperator('add'));
+    $('#subtract-div').on('click', () => setOperator('subtract'))
+    $('#multiply-div').on('click', () => setOperator('multiply'))
+    $('#divide-div').on('click', () => setOperator('divide'))
 } 
 
 // submit sends the data from the inputs to server
 function submit() { 
     console.log('submit was clicked'); 
-    let first = $('#first-number').val();
+    if ((first === '') || (selectedOperator === '') ) {
+        console.log('a value is undefined', first, second, selectedOperator ) 
+        return 'a value is undefined, first, second, selectedOperator'
+    }
+    second = $('#calc-display').val(); 
     console.log(first); 
-    let second = $('#second-number').val(); 
     console.log(second); 
     // this post sends the data1
     $.ajax({
@@ -36,8 +41,6 @@ function submit() {
         console.log('received from server POST:')
         
         getResults()
-        // clear inputs 
-        clearInputs(); 
     })
 } 
 
@@ -50,78 +53,145 @@ function getResults() {
         url: '/numbers'
     }).then(function(response){
         console.log('Got response', response); 
-        renderPage(response); 
+        switchFirstAndSecond(response) 
+        clearInputs(response)
     })
-    
-    console.log(`end of get Results`);
 } 
 
-function renderPage(input) { 
-    console.log(input)
-}
-
 function setOperator(num) { 
-    if (num === 'add') { 
+    if ((num === 'add') && ($('#calc-display').val() !== "") && (first === '')) { 
+        first = $('#calc-display').val();
         console.log('+ selected') 
         // update selectedOperator 
         selectedOperator = 'plus'; 
-        // highlight selected 
-        $('#add-button').addClass('red') 
-        // un-highlight all other buttons
+      // highlight selected & un-highlight all other buttons
+        removeAllElse(selectedOperator);
+        storeFirstNumberAndClearInput(first)
+    } 
+    else if ((num === 'add') && ($('#calc-display').val() !== "") && (first !== '')) { 
+        submit();
+        second = $('#calc-display').val();
+        console.log('+ selected') 
+        // update selectedOperator 
+        selectedOperator = 'plus'; 
+      // highlight selected & un-highlight all other buttons
         removeAllElse(selectedOperator); 
+        submit();
+        storeFirstNumberAndClearInput(first);
     } 
-    else if(num === 'subtract') {
-        console.log('- selected') 
-        $('#subtract-button').addClass('red') 
-        selectedOperator = 'subtract'
+    else if((num === 'subtract') && ($('#calc-display').val() !== "") && (first === '')) { 
+        first = $('#calc-display').val();
+        submit(); 
+        console.log('- selected'); 
+        selectedOperator = 'subtract'; 
         removeAllElse(selectedOperator);
+        storeFirstNumberAndClearInput(first);
     } 
-    else if (num === 'multiply') {
-        console.log('* selected') 
-        $('#multiply-button').addClass('red') 
-        selectedOperator = 'multiply'
-        removeAllElse(selectedOperator);
+    else if((num === 'subtract') && ($('#calc-display').val() !== "") && (first !== '')) { 
+        submit();
+        second = $('#calc-display').val();
+        console.log('- selected');
+        selectedOperator = 'subtract'; 
+        removeAllElse(selectedOperator); 
+        submit();
+        storeFirstNumberAndClearInput(first);
     } 
-    else if(num === 'divide') {
-        console.log('/ selected') 
-        $('#divide-button').addClass('red') 
-        selectedOperator = 'divide'
+    else if((num === 'multiply') && ($('#calc-display').val() !== "") && (first === '')) { 
+        first = $('#calc-display').val();
+        console.log('* selected'); 
+        selectedOperator = 'multiply'; 
         removeAllElse(selectedOperator);
-    }
+        storeFirstNumberAndClearInput(first);
+        } 
+    else if((num === 'multiply') && ($('#calc-display').val() !== "") && (first !== '')) { 
+        second = $('#calc-display').val();
+        console.log('* selected'); 
+        selectedOperator = 'multiply'; 
+        removeAllElse(selectedOperator);
+        submit();
+        storeFirstNumberAndClearInput(first);
+        } 
+    else if((num === 'divide') && ($('#calc-display').val() !== "") && (first === '')) { 
+        first = $('#calc-display').val();
+        console.log('/ selected'); 
+        selectedOperator = 'divide'; 
+        removeAllElse(selectedOperator);
+        storeFirstNumberAndClearInput(first);
+        } 
+    else if((num === 'divide') && ($('#calc-display').val() !== "") && (first !== '')) { 
+        second = $('#calc-display').val();
+        console.log('/ selected');
+        selectedOperator = 'divide'; 
+        removeAllElse(selectedOperator);
+        submit();
+        storeFirstNumberAndClearInput(first);
+        } 
 }
 
 // function to clear the inputs of the calculator 
-function clearInputs() { 
+function clearInputs(num) { 
     console.log('inputs cleared') 
     // resets inputs
-    $('.input').val(''); 
+    $('.calc-display').text(`${num}`); 
     // reset selection 
     $('.operator-button').removeClass('red'); 
+    $('.operator-button').addClass('operator-button-color'); 
     selectedOperator = ''; 
+    $('#first-number-display').text(`${num}`)
 }  
 
+function storeFirstNumberAndClearInput(num) {
+    $('#calc-display').val(''); 
+    $('#first-number-display').text(`${num}`)
+}
+
+function switchFirstAndSecond (num) { 
+    first = num; 
+    second = ''
+}
+
+
+
+// this function is responsible for highlighting and un-highlighting the operator divs 
 function removeAllElse(item) { 
-    if (item === 'plus' )  {
-        $('#subtract-button').removeClass('red');
-        $('#multiply-button').removeClass('red');
-        $('#divide-button').removeClass('red');
+    if (item === 'plus') {
+        $('#add-div').removeClass('operator-button-color')
+        $('#add-div').addClass('red') 
+        $('#subtract-div').removeClass('red');    
+        $('#multiply-div').removeClass('red');
+        $('#divide-div').removeClass('red');
+        $('#subtract-div').addClass('operator-button-color');
+        $('#multiply-div').addClass('operator-button-color');
+        $('#divide-div').addClass('operator-button-color');
     }
-    else if (item === 'subtract' )  {
-        $('#add-button').removeClass('red');
-        $('#multiply-button').removeClass('red');
-        $('#divide-button').removeClass('red');
+    else if (item === 'subtract' )  { 
+        $('#subtract-div').removeClass('operator-button-color')
+        $('#subtract-div').addClass('red') 
+        $('#add-div').removeClass('red');
+        $('#multiply-div').removeClass('red');
+        $('#divide-div').removeClass('red');
+        $('#add-div').addClass('operator-button-color');
+        $('#multiply-div').addClass('operator-button-color');
+        $('#divide-div').addClass('operator-button-color');
     }
-    else if (item === 'multiply' )  {
-        $('#subtract-button').removeClass('red');
-        $('#add-button').removeClass('red');
-        $('#divide-button').removeClass('red');
+    else if (item === 'multiply' )  { 
+        $('#multiply-div').removeClass('operator-button-color')
+        $('#multiply-div').addClass('red') 
+        $('#subtract-div').removeClass('red');
+        $('#add-div').removeClass('red');
+        $('#divide-div').removeClass('red');
+        $('#add-div').addClass('operator-button-color');
+        $('#subtract-div').addClass('operator-button-color');
+        $('#divide-div').addClass('operator-button-color');
     }
     else if (item === 'divide' )  {
-        $('#subtract-button').removeClass('red');
-        $('#multiply-button').removeClass('red');
-        $('#add-button').removeClass('red');
+        $('#divide-div').removeClass('operator-button-color')
+        $('#divide-div').addClass('red') 
+        $('#subtract-div').removeClass('red');
+        $('#multiply-div').removeClass('red');
+        $('#add-div').removeClass('red');
+        $('#add-div').addClass('operator-button-color');
+        $('#subtract-div').addClass('operator-button-color');
+        $('#multiply-div').addClass('operator-button-color');
     } 
-    else { 
-        console.log('error deselecting colors')
-    }
-}
+} 

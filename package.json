@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "bootstrap": "^4.5.3",
     "express": "^4.17.1",
     "jquery": "^3.5.1"
   },
@@ -7,7 +8,6 @@
   "description": "[Project Instructions](./INSTRUCTIONS.md), this line may be removed once you have updated the README.md",
   "version": "1.0.0",
   "main": "index.js",
-  "devDependencies": {},
   "scripts": {
     "start": "node server/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
