@@ -59,7 +59,11 @@ function getResults() {
 } 
 
 function setOperator(num) { 
-    if ((num === 'add') && ($('#calc-display').val() !== "") && (first === '')) { 
+    //////////////////// ADDITION define first number //////////////////////////////////////////////
+    if (($('#calc-display').val() == "") && (first === '')) { 
+        return 'cant select operator'
+    }
+    else if ((num === 'add') && ($('#calc-display').val() !== "") && (first === '')) { 
         first = $('#calc-display').val();
         console.log('+ selected') 
         // update selectedOperator 
@@ -67,64 +71,60 @@ function setOperator(num) {
       // highlight selected & un-highlight all other buttons
         removeAllElse(selectedOperator);
         storeFirstNumberAndClearInput(first)
-    } 
-    else if ((num === 'add') && ($('#calc-display').val() !== "") && (first !== '')) { 
-        submit();
+    }
+    // ADDITION define second number
+    else if ((num === 'add') && ($('#calc-display').val() !== "") && (first !== '')) {  
         second = $('#calc-display').val();
         console.log('+ selected') 
         // update selectedOperator 
         selectedOperator = 'plus'; 
       // highlight selected & un-highlight all other buttons
         removeAllElse(selectedOperator); 
-        submit();
-        storeFirstNumberAndClearInput(first);
     } 
+    //////////////////// SUBTRACTION define first number //////////////////////////////////////////////
     else if((num === 'subtract') && ($('#calc-display').val() !== "") && (first === '')) { 
         first = $('#calc-display').val();
-        submit(); 
         console.log('- selected'); 
         selectedOperator = 'subtract'; 
-        removeAllElse(selectedOperator);
-        storeFirstNumberAndClearInput(first);
+        removeAllElse(selectedOperator); 
+        storeFirstNumberAndClearInput()
     } 
-    else if((num === 'subtract') && ($('#calc-display').val() !== "") && (first !== '')) { 
-        submit();
+    // SUBTRACTION define second number
+    else if((num === 'subtract') && ($('#calc-display').val() !== "") && (first !== '') ) { 
         second = $('#calc-display').val();
         console.log('- selected');
         selectedOperator = 'subtract'; 
         removeAllElse(selectedOperator); 
-        submit();
-        storeFirstNumberAndClearInput(first);
     } 
+    //////////////////// MULTIPLICATION define first number ////////////////////////////////////////////// 
     else if((num === 'multiply') && ($('#calc-display').val() !== "") && (first === '')) { 
         first = $('#calc-display').val();
         console.log('* selected'); 
         selectedOperator = 'multiply'; 
-        removeAllElse(selectedOperator);
-        storeFirstNumberAndClearInput(first);
+        removeAllElse(selectedOperator); 
+        storeFirstNumberAndClearInput()
         } 
+    // MULTIPLICATION define second number
     else if((num === 'multiply') && ($('#calc-display').val() !== "") && (first !== '')) { 
         second = $('#calc-display').val();
-        console.log('* selected'); 
+        console.log('* selected');
         selectedOperator = 'multiply'; 
         removeAllElse(selectedOperator);
-        submit();
-        storeFirstNumberAndClearInput(first);
         } 
+    //////////////////// DIVISION define first number //////////////////////////////////////////////
     else if((num === 'divide') && ($('#calc-display').val() !== "") && (first === '')) { 
         first = $('#calc-display').val();
         console.log('/ selected'); 
         selectedOperator = 'divide'; 
-        removeAllElse(selectedOperator);
-        storeFirstNumberAndClearInput(first);
+        removeAllElse(selectedOperator); 
+        storeFirstNumberAndClearInput()
         } 
+    // DIVISION define second number
     else if((num === 'divide') && ($('#calc-display').val() !== "") && (first !== '')) { 
         second = $('#calc-display').val();
         console.log('/ selected');
         selectedOperator = 'divide'; 
         removeAllElse(selectedOperator);
-        submit();
-        storeFirstNumberAndClearInput(first);
         } 
 }
 
@@ -132,26 +132,25 @@ function setOperator(num) {
 function clearInputs(num) { 
     console.log('inputs cleared') 
     // resets inputs
-    $('.calc-display').text(`${num}`); 
+    $('#calc-display').val(''); 
     // reset selection 
     $('.operator-button').removeClass('red'); 
-    $('.operator-button').addClass('operator-button-color'); 
-    selectedOperator = ''; 
-    $('#first-number-display').text(`${num}`)
+    $('.operator-button').addClass('operator-button-color');  
+    $('#first-number-display').text(`${num}`) 
+    selectedOperator = ""; 
 }  
-
-function storeFirstNumberAndClearInput(num) {
-    $('#calc-display').val(''); 
-    $('#first-number-display').text(`${num}`)
-}
 
 function switchFirstAndSecond (num) { 
     first = num; 
-    second = ''
+    second = '';
+    trackNumbers('switchFirstAndSecond')
+}
+function storeFirstNumberAndClearInput() { 
+    $('#first-number-display').text(`${first}`) 
+    $('#calc-display').val(''); 
 }
 
-
-
+1
 // this function is responsible for highlighting and un-highlighting the operator divs 
 function removeAllElse(item) { 
     if (item === 'plus') {
@@ -195,3 +194,8 @@ function removeAllElse(item) {
         $('#multiply-div').addClass('operator-button-color');
     } 
 } 
+
+
+function trackNumbers(msg) {
+    $('#calcDiv').append(`<p> ${msg} first is ${first}</p> second is ${second}`); 
+}
