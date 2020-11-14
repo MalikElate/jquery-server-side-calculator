@@ -33,8 +33,13 @@ function calculator(num1, num2, op) {
     else if (op === 'divide') {
         answer = num1 / num2
     } 
-    arrayAnswer = []; 
-    arrayAnswer.push(answer)
+    answerData = {
+        answer: answer, 
+        first: num1, 
+        second: num2,
+        operator: op
+    }
+    arrayAnswer.push(answerData)
 }
 
 
@@ -56,7 +61,12 @@ app.post('/numbers', (req, res) => {
     calculator(first, second, operator);
     console.log('Post: getting numbers data...,', data); 
     res.sendStatus(200) // 200 is an OK status 
-});
+}); 
+
+app.delete('/numbers', function (req, res) {
+    res.send('Got a DELETE request at /number') 
+    arrayAnswer = [];
+  })
 //-----------------------End of routes ---------------------------
 
 // Tell our server to start listening for requests on our port

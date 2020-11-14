@@ -15,7 +15,9 @@ function readyNow() {
     $('#add-div').on('click', () => setOperator('add'));
     $('#subtract-div').on('click', () => setOperator('subtract'))
     $('#multiply-div').on('click', () => setOperator('multiply'))
-    $('#divide-div').on('click', () => setOperator('divide'))
+    $('#divide-div').on('click', () => setOperator('divide')) 
+    // history click events 
+    $('#btn-log-clear').on('click', clearLogs);
 } 
 
 // submit sends the data from the inputs to server
@@ -54,7 +56,7 @@ function getResults() {
     }).then(function(response){
         console.log('Got response', response); 
         renderResults(response)
-        switchFirstAndSecond(response); 
+        switchFirstAndSecond(response[response.length -1].answer); 
     }) 
     clearInputs();
 } 
@@ -69,6 +71,7 @@ function clearInputs() {
     selectedOperator = ""; 
 }  
 
+// clears all inputs and selected operators
 function clearAll() { 
     console.log('cleared All')
     clearInputs();
@@ -77,16 +80,31 @@ function clearAll() {
     second =""
 }
 
+// automatically set the answer to first number for faster calculating 
 function switchFirstAndSecond (num) { 
     first = num; 
     second = '';
     trackNumbers('switchFirstAndSecond')
 } 
 
+// log all past calculations and set the first number display
 function renderResults(num) {
-    $('#first-number-display').text(`${num}`) 
-}
-
+    $('#first-number-display').text(`${num[num.length -1].answer}`); 
+    $('#log-div').empty(); 
+    for (let i=num.length-1; i>=0; i--) {
+        $('#log-div').append(`<p>${num[i].first} ${num[i].operator} ${num[i].second} = ${num[i].answer}</p>`);
+    }
+} 
+function clearLogs() { 
+    console.log('clearLogs was called')
+    $.ajax({
+        method: 'DELETE', 
+        url: '/numbers'
+    }).then(function(response){
+        console.log(response); 
+        $('#log-div').empty(); 
+    }) 
+} 
 
 // this function selects the operator 
 function setOperator(num) { 
