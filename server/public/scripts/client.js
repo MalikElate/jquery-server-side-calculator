@@ -3,14 +3,14 @@ console.log('hello from client');
 let selectedOperator = ''; 
 let first = ''; 
 let second =''; 
-let sequence = false; 
 $(document).ready(readyNow); 
 
 function readyNow() { 
     console.log('hello from JQuery');
     // button click events 
-    $('#clear-button').on('click', clearInputs);
     $('#enter-div').on('click', submit);
+    $('#clear-div').on('click', clearInputs);
+    $('#clear-all-div').on('click', clearAll);
     // operator click events 
     $('#add-div').on('click', () => setOperator('add'));
     $('#subtract-div').on('click', () => setOperator('subtract'))
@@ -53,11 +53,42 @@ function getResults() {
         url: '/numbers'
     }).then(function(response){
         console.log('Got response', response); 
-        switchFirstAndSecond(response) 
-        clearInputs(response)
-    })
+        renderResults(response)
+        switchFirstAndSecond(response); 
+    }) 
+    clearInputs();
+} 
+// function to clear the inputs of the calculator 
+function clearInputs() { 
+    console.log('inputs cleared') 
+    // resets inputs
+    $('#calc-display').val(''); 
+    // reset selection 
+    $('.operator-button').removeClass('red'); 
+    $('.operator-button').addClass('operator-button-color');  
+    selectedOperator = ""; 
+}  
+
+function clearAll() { 
+    console.log('cleared All')
+    clearInputs();
+    $('#first-number-display').text(`******`);
+    first = ""; 
+    second =""
+}
+
+function switchFirstAndSecond (num) { 
+    first = num; 
+    second = '';
+    trackNumbers('switchFirstAndSecond')
 } 
 
+function renderResults(num) {
+    $('#first-number-display').text(`${num}`) 
+}
+
+
+// this function selects the operator 
 function setOperator(num) { 
     //////////////////// ADDITION define first number //////////////////////////////////////////////
     if (($('#calc-display').val() == "") && (first === '')) { 
@@ -128,29 +159,11 @@ function setOperator(num) {
         } 
 }
 
-// function to clear the inputs of the calculator 
-function clearInputs(num) { 
-    console.log('inputs cleared') 
-    // resets inputs
-    $('#calc-display').val(''); 
-    // reset selection 
-    $('.operator-button').removeClass('red'); 
-    $('.operator-button').addClass('operator-button-color');  
-    $('#first-number-display').text(`${num}`) 
-    selectedOperator = ""; 
-}  
-
-function switchFirstAndSecond (num) { 
-    first = num; 
-    second = '';
-    trackNumbers('switchFirstAndSecond')
-}
 function storeFirstNumberAndClearInput() { 
     $('#first-number-display').text(`${first}`) 
     $('#calc-display').val(''); 
 }
 
-1
 // this function is responsible for highlighting and un-highlighting the operator divs 
 function removeAllElse(item) { 
     if (item === 'plus') {
@@ -194,8 +207,3 @@ function removeAllElse(item) {
         $('#multiply-div').addClass('operator-button-color');
     } 
 } 
-
-
-function trackNumbers(msg) {
-    $('#calcDiv').append(`<p> ${msg} first is ${first}</p> second is ${second}`); 
-}
