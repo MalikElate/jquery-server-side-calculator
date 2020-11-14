@@ -22,12 +22,12 @@ The server should be able to handle:
 
 ### History
 
-[]Keep a historical record of all math operations and solutions on the server. 
-[]Display a list of all previous calculations on the page when it loads using a GET request. 
-[]Update the list when a new calculation is made.
+[x]Keep a historical record of all math operations and solutions on the server. 
+[x]Display a list of all previous calculations on the page when it loads using a GET request. 
+[x]Update the list when a new calculation is made.
 
-> NOTE: []History should exist even after refreshing the page. 
-[]It's expected that the history will go away after restarting the server. 
+> NOTE: [x]History should exist even after refreshing the page. 
+It's expected that the history will go away after restarting the server. 
 We'll talk about long term data storage next week.
 
 ---
@@ -48,9 +48,9 @@ We'll talk about long term data storage next week.
 
 - [x]Only allow the POST call to happen if all necessary input is ready.
 
-  []*Data integrity is superfluously important! Sometimes users hit tje "go button" without fully inputting the needed fields. Show an alert if they left something empty and don't send bad or incomplete data to the server.*
+  [x]*Data integrity is superfluously important! Sometimes users hit tje "go button" without fully inputting the needed fields. Show an alert if they left something empty and don't send bad or incomplete data to the server.*
 
-- []Allow a user to clear the history by clicking on a button. Technically this shouldn't be a GET or a POST. Look into making a DELETE request!
+- [x]Allow a user to clear the history by clicking on a button. Technically this shouldn't be a GET or a POST. Look into making a DELETE request!
 
   *GETs are used to, well, get information from the server. POSTs are used to send new info to the server. DELETEs are used for, you guessed it, deleting info already on the server.*
 

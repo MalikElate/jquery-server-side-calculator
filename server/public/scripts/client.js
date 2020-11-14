@@ -17,7 +17,9 @@ function readyNow() {
     $('#multiply-div').on('click', () => setOperator('multiply'))
     $('#divide-div').on('click', () => setOperator('divide')) 
     // history click events 
-    $('#btn-log-clear').on('click', clearLogs);
+    $('#btn-log-clear').on('click', clearLogs); 
+    // keep log updated after refresh 
+    getResults() 
 } 
 
 // submit sends the data from the inputs to server
@@ -53,7 +55,7 @@ function getResults() {
     $.ajax({
         method: 'GET', 
         url: '/numbers'
-    }).then(function(response){
+    }).then(function(response){ 
         console.log('Got response', response); 
         renderResults(response)
         switchFirstAndSecond(response[response.length -1].answer); 
