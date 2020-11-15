@@ -58,6 +58,6 @@ We'll talk about long term data storage next week.
 
   *Anticipating a user's wants and adding the feature in the interface is often a logical progression that ends up in stretch goals for project.*
 
--[] Deploy to Heroku!
+-[x] Deploy to Heroku!
 
   *Deploying a project makes it available to the masses and is a necessary step for which to prepare when planning a project.*
