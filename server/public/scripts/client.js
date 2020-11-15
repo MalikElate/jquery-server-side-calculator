@@ -16,6 +16,9 @@ function readyNow() {
     $('#subtract-div').on('click', () => setOperator('subtract'))
     $('#multiply-div').on('click', () => setOperator('multiply'))
     $('#divide-div').on('click', () => setOperator('divide')) 
+    // number click event 
+    $('.btn-div-ex0').on('click', keyBoard) 
+    $('#btn-0-div').on('click', keyBoard) 
     // history click events 
     $('#btn-log-clear').on('click', clearLogs); 
     // keep log updated after refresh 
@@ -48,6 +51,10 @@ function submit() {
     })
 } 
 
+// keyBoard gives functionality to the number divs
+function keyBoard() { 
+    $('#calc-display').val($('#calc-display').val() + $(this).text()) ;
+} 
 
 function getResults() { 
     // Making a GET request to our server

@@ -50,7 +50,7 @@ function calculator(num1, num2, op) {
 app.get('/numbers', (req, res) => { 
     console.log('sending answer ...'); 
     res.send(arrayAnswer); 
-    console.log('sending answer ...'); 
+    console.log('sending answer 0...'); 
 })  
 
 app.post('/numbers', (req, res) => {  
