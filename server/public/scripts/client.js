@@ -21,7 +21,8 @@ function readyNow() {
     $('#btn-0-div').on('click', keyBoard) 
     // history click events 
     $('#btn-log-clear').on('click', clearLogs); 
-    $('#btn-log-clear').mouseenter( handlerIn ).mouseleave( handlerOut );
+    $('#btn-log-clear').mouseenter( handlerIn ).mouseleave( handlerOut ); 
+    $('#table-row').on('click', '#log-calc-btn', reCalc); 
     // keep log updated after refresh 
     getResults() 
 } 
@@ -112,7 +113,8 @@ function renderResults(num) {
             <td><button id="log-calc-btn">calculate</button></td> 
         <tr>`
         );
-    }
+    } 
+    $('#log-calc-btn').mouseenter( handlerIn ).mouseleave( handlerOut );
 } 
 
 // Clear all logs
@@ -125,12 +127,25 @@ function clearLogs() {
         console.log(response); 
         $('#table-row').empty(); 
     }) 
-} 
+}
+
+// on hover, highligh buttons orange 
 function handlerIn() { 
-    $(this).addClass('red')
+    $(this).addClass('red');
 }
 function handlerOut() { 
-    $(this).removeClass('red')
+    $(this).removeClass('red');
+} 
+
+// 
+function reCalc() { 
+    first = ($(this).parent().siblings().eq(1).text());
+    console.log(`first = ${$(this).parent().siblings().eq(1).text()}`);
+    second = ($(this).parent().siblings().eq(4).text());
+    storeFirstNumberAndClearInput(); 
+    $('#calc-display').val(`${second}`); 
+    setOperator($(this).parent().siblings().eq(2).text()); 
+    window.scrollTo(0, 0);
 }
 
 // this function selects the operator 
