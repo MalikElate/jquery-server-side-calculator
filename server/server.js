@@ -42,15 +42,11 @@ function calculator(num1, num2, op) {
     arrayAnswer.push(answerData)
 }
 
-
-
-
-
 // ----------- These routes will vary for each assignment -----------
 app.get('/numbers', (req, res) => { 
     console.log('sending answer ...'); 
     res.send(arrayAnswer); 
-    console.log('sending answer 0...'); 
+    console.log('sending answer ...'); 
 })  
 
 app.post('/numbers', (req, res) => {  

@@ -12,7 +12,7 @@ h1 {
 #first-number-display { 
     font-size: 1.75rem;
     color: gray; 
-}
+}  
 #calc-display { 
     width: 409.5px;
     height: 110px; 
@@ -47,5 +47,8 @@ h1 {
 }  
 #enter-div { 
     margin-left: 1px
+} 
+#table-head { 
+    background-color: ;
 }
 

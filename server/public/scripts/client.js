@@ -21,6 +21,7 @@ function readyNow() {
     $('#btn-0-div').on('click', keyBoard) 
     // history click events 
     $('#btn-log-clear').on('click', clearLogs); 
+    $('#btn-log-clear').mouseenter( handlerIn ).mouseleave( handlerOut );
     // keep log updated after refresh 
     getResults() 
 } 
@@ -99,11 +100,22 @@ function switchFirstAndSecond (num) {
 // log all past calculations and set the first number display
 function renderResults(num) {
     $('#first-number-display').text(`${num[num.length -1].answer}`); 
-    $('#log-div').empty(); 
+    $('#table-row').empty(); 
     for (let i=num.length-1; i>=0; i--) {
-        $('#log-div').append(`<p>${num[i].first} ${num[i].operator} ${num[i].second} = ${num[i].answer}</p>`);
+        $('#table-row').append(` 
+        <tr>
+            <td>${(num.length - i)}</td> 
+            <td>${num[i].first}</td>
+            <td>${num[i].operator}</td>
+            <td>${num[i].second}</td>
+            <td>${num[i].answer}</td> 
+            <td><button id="log-calc-btn">calculate</button></td> 
+        <tr>`
+        );
     }
 } 
+
+// Clear all logs
 function clearLogs() { 
     console.log('clearLogs was called')
     $.ajax({
@@ -111,9 +123,15 @@ function clearLogs() {
         url: '/numbers'
     }).then(function(response){
         console.log(response); 
-        $('#log-div').empty(); 
+        $('#table-row').empty(); 
     }) 
 } 
+function handlerIn() { 
+    $(this).addClass('red')
+}
+function handlerOut() { 
+    $(this).removeClass('red')
+}
 
 // this function selects the operator 
 function setOperator(num) { 
