@@ -8,7 +8,7 @@ const bodyParser = require('body-parser');
 const app = express();
 
 // set port value
-const port = 5000; 
+const port = process.env.PORT || 5000;  
 
 // Tell express where to find static files that it can send on request
 app.use( express.static('server/public') );
